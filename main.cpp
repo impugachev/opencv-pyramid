@@ -21,14 +21,18 @@ int main(int argc, char** argv)
         std::vector<cv::Mat> opencvOut;
         const auto maxLevel = std::stoi(argv[2]);
         cv::buildPyramid(image, opencvOut, maxLevel);
-        const auto myOut = myBuildPyramid(image, maxLevel);
+        const auto fullOpencv = concatenateImages(opencvOut);
+        const auto fullMy = concatenateImages(myBuildPyramid(image, maxLevel));
 
         const char *opencvWindow = "OpenCV",
-                   *myWindow = "MyOwn";
+                   *myWindow     = "MyOwn",
+                   *dif          = "Difference";
         cv::namedWindow(opencvWindow);
-        cv::imshow(opencvWindow, concatenateImages(opencvOut));
+        cv::imshow(opencvWindow, fullOpencv);
         cv::namedWindow(myWindow);
-        cv::imshow(myWindow, concatenateImages(myOut));
+        cv::imshow(myWindow, fullMy);
+        cv::namedWindow(dif);
+        cv::imshow(dif, fullOpencv - fullMy);
 
         cv::waitKey();
     }
