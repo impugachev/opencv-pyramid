@@ -95,8 +95,8 @@ std::vector<cv::Mat> myBuildPyramid(const cv::Mat& image, size_t maxLevel)
         cv::Mat smoothedImage = imageWithBorder(cv::Rect(kernelSize / 2, kernelSize / 2, result.back().cols, result.back().rows));
         // create a smaller image
         cv::Mat smallerImage((smoothedImage.rows + 1) / 2, (smoothedImage.cols + 1) / 2, smoothedImage.type());
-        for (int x = 1; x < smoothedImage.cols; x += 2)
-            for (int y = 1; y < smoothedImage.rows; y += 2)
+        for (int x = 0; x < smoothedImage.cols; x += 2)
+            for (int y = 0; y < smoothedImage.rows; y += 2)
                 // copy every even pixel
                 smallerImage.at<cv::Vec3b>(y / 2, x / 2) = smoothedImage.at<cv::Vec3b>(y, x);
         result.push_back(smallerImage);
